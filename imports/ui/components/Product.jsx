@@ -3,10 +3,13 @@ import React, { PureComponent } from "react";
 
 // Components
 import Button from "../components/Button.jsx";
+import { Meteor } from "meteor/meteor";
 
 class Product extends PureComponent {
-  handleBuyProduct = () => {
-    alert("This button does nothing!");
+  handleBuyProduct = (name, price) => {
+    Meteor.call("orders.saveNewOrder", name, price);
+    this.props.updateCounter();
+    window.alert(`Your cart has been updated.\n`);
   };
 
   render() {
@@ -45,7 +48,7 @@ class Product extends PureComponent {
               </div>
             )}
           </div>
-          <Button onClick={this.handleBuyProduct}>
+          <Button onClick={() => this.handleBuyProduct(name, price)}>
             Buy {name}
           </Button>
         </div>
