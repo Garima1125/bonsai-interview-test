@@ -54,7 +54,7 @@ class Checkout extends Component {
     const { orders, totalAmount, totalQuantity } = this.state;
     return (
       <Page pageTitle="Checkout" history goBack={this.goBack}>
-        <div className="container">
+        <div className="container table-div">
           <div className="row justify-content-center">
             <Table striped bordered condensed hover responsive>
               <thead>
