@@ -68,3 +68,19 @@ Clicking on 'Go Shopping' button should display the shop page:
 ## Lint
 1. `meteor npm run lint`
 2. Before pushing linting is automatically run.
+
+## Screenshots
+
+![Home Page with Signin Button](https://github.com/Garima1125/bonsai-interview-test/blob/master/docs/homepage%20with%20signin%20button.png?raw=true)
+
+![Login Form](https://github.com/Garima1125/bonsai-interview-test/blob/master/docs/user%20authentication%20with%20google%20and%20twitter.png?raw=true)
+
+![Google Login Popup](https://github.com/Garima1125/bonsai-interview-test/blob/master/docs/google%20login%20page.png?raw=true)
+
+![Home Page Post Login](https://github.com/Garima1125/bonsai-interview-test/blob/master/docs/logged%20in%20with%20google.png?raw=true)
+
+![Cart Update on Clicking "Buy"](https://github.com/Garima1125/bonsai-interview-test/blob/master/docs/updating%20cart.png?raw=true)
+
+![Cart Details](https://github.com/Garima1125/bonsai-interview-test/blob/master/docs/cart%20items%20details.png?raw=true)
+
+
