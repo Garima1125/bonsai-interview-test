@@ -21,28 +21,33 @@ class Checkout extends Component {
   goBack = () => this.props.history.push("/shop");
 
   componentWillMount() {
-    Meteor.call("orders.getOrders", (error, response) => {
-      if (error) {
-        this.setState(() => ({ error: error }));
-      } else {
-        this.setState(
-          {
-            orders: response
-          }, () => {
-            let quantity = this.state.totalQuantity;
-            let amount = this.state.totalAmount;
-            this.state.orders.forEach(order => {
-              quantity += order.quantity;
-              amount += order.unit_price;
-            });
-            this.setState({
-              totalQuantity: quantity,
-              totalAmount: amount
-            });
-          }
-        );
+    Meteor.call(
+      "orders.getOrders",
+      localStorage.getItem("Meteor.userId"),
+      (error, response) => {
+        if (error) {
+          this.setState(() => ({ error: error }));
+        } else {
+          this.setState(
+            {
+              orders: response
+            },
+            () => {
+              let quantity = this.state.totalQuantity;
+              let amount = this.state.totalAmount;
+              this.state.orders.forEach(order => {
+                quantity += order.quantity;
+                amount += order.unit_price;
+              });
+              this.setState({
+                totalQuantity: quantity,
+                totalAmount: amount
+              });
+            }
+          );
+        }
       }
-    });
+    );
   }
 
   render() {
@@ -51,11 +56,10 @@ class Checkout extends Component {
       <Page pageTitle="Checkout" history goBack={this.goBack}>
         <div>
           <div>
-            <Table striped bordered condensed hover>
+            <Table striped bordered condensed hover responsive>
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Product Id</th>
                   <th>Name</th>
                   <th>Quantity</th>
                   <th>Unit Price</th>
@@ -71,9 +75,6 @@ class Checkout extends Component {
                         {index + 1}
                       </td>
                       <td>
-                        {order.product_id}
-                      </td>
-                      <td>
                         {order.name}
                       </td>
                       <td>
@@ -83,7 +84,7 @@ class Checkout extends Component {
                         {order.unit_price}
                       </td>
                       <td>
-                        {order.time.toString()}
+                        {order.time.toDateString()}
                       </td>
                       <td>
                         {order.order_status}
@@ -99,17 +100,13 @@ class Checkout extends Component {
             <Table striped bordered condensed hover className="detailsTable">
               <tbody>
                 <tr>
-                  <td>
-                    Amount:
-                  </td>
+                  <td>Amount:</td>
                   <td>
                     {totalAmount.toFixed(2)}
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    Quantity:
-                  </td>
+                  <td>Quantity:</td>
                   <td>
                     {totalQuantity}
                   </td>

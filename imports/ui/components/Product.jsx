@@ -7,7 +7,12 @@ import { Meteor } from "meteor/meteor";
 
 class Product extends PureComponent {
   handleBuyProduct = (name, price) => {
-    Meteor.call("orders.saveNewOrder", name, price);
+    Meteor.call(
+      "orders.saveNewOrder",
+      name,
+      price,
+      localStorage.getItem("Meteor.userId")
+    );
     this.props.updateCounter();
     window.alert(`Your cart has been updated.\n`);
   };

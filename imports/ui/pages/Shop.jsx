@@ -17,20 +17,24 @@ class Shop extends Component {
     };
   }
 
-  updateCounter =() =>{
-    Meteor.call("orders.getOrders", (error, response) => {
-      if (error) {
-        this.setState(() => ({ error: error }));
-      } else {
-        let itemsAdded = 0;
-        response.forEach(order => {
-          itemsAdded += order.quantity;
-        });
-        this.setState({
-          itemsAdded: itemsAdded
-        });
+  updateCounter = () => {
+    Meteor.call(
+      "orders.getOrders",
+      localStorage.getItem("Meteor.userId"),
+      (error, response) => {
+        if (error) {
+          this.setState(() => ({ error: error }));
+        } else {
+          let itemsAdded = 0;
+          response.forEach(order => {
+            itemsAdded += order.quantity;
+          });
+          this.setState({
+            itemsAdded: itemsAdded
+          });
+        }
       }
-    });
+    );
   };
   componentWillMount() {
     Meteor.call("merchants.getMerchants", (error, response) => {
@@ -59,10 +63,20 @@ class Shop extends Component {
     );
 
     return (
-      <Page pageTitle="shop" history goBack={this.goBack} cart={true} itemsAdded={ this.state.itemsAdded }>
+      <Page
+        pageTitle="shop"
+        history
+        goBack={this.goBack}
+        cart={true}
+        itemsAdded={this.state.itemsAdded}
+      >
         <div className="shop-page">
           {products.map(({ id, ...product }) =>
-            <Product {...product} key={id} updateCounter={() => this.updateCounter()} />
+            <Product
+              {...product}
+              key={id}
+              updateCounter={() => this.updateCounter()}
+            />
           )}
         </div>
       </Page>

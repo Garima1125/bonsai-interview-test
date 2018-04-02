@@ -13,7 +13,7 @@ import { Random } from "meteor/random";
  * @returns {Object} A single order object.
  */
 export const getLastOrder = () => {
-  const options = {sort: {createdAt: -1}, limit: 1};
+  const options = { sort: { createdAt: -1 }, limit: 1 };
   try {
     const lastOrderCursor = Products.find({}, options);
     const lastOrder = lastOrderCursor.fetch()[0];
@@ -44,7 +44,7 @@ export const getOrderById = orderId => {
   }
 };
 
-export const saveNewOrder = (name, price) => {
+export const saveNewOrder = (name, price, userId) => {
   try {
     let document;
     let order = Orders.findOne({
@@ -57,7 +57,8 @@ export const saveNewOrder = (name, price) => {
         unit_price: price,
         time: new Date(),
         quantity: 1,
-        order_status: "pending"
+        order_status: "pending",
+        user_id: userId
       };
       return Orders.insert(document);
     } else {
@@ -77,10 +78,10 @@ export const saveNewOrder = (name, price) => {
   }
 };
 
-export const getOrders = () => {
+export const getOrders = user_id => {
   let orderData;
   try {
-    orderData = Orders.find({}).fetch();
+    orderData = Orders.find({ user_id: user_id }).fetch();
   } catch (error) {
     throw new Meteor.Error(
       `${__filename}:getOrders`,
